@@ -17,7 +17,6 @@ class Databbase{
         $dsn = $this->_DRIVER.':host='.$this->_HOST.';dbname='.$this->_DB_NAME;
         $this->conn = new PDO($dsn,$this->_USERNAME,$this->_PASSWORD,$option);
         $this->conn->query("SELECT 1");
-        echo "Sucess";
         return $this->conn;  
 
     } catch (PDOException $e) {

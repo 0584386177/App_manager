@@ -1,3 +1,27 @@
+<?php
+require_once '../config/database.php';
+require_once '../models/model.php';
+include '../models/AdminModel.php';
+session_start();
+$adminModel = new AdminModel;
+$check = null;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['login-username']) && isset($_POST['login-password'])) {
+        $username = $_POST['login-username'];
+        $password  = $_POST['login-password'];
+        $role = $adminModel->checkLogin($username, $password);
+        $_SESSION['user'] = $role;
+        echo $role;
+        if ($role == 1) {
+            header("Location: index.php");
+            exit();
+        }else{
+            $checkRole = 'Tài khoản hoặc mật khẩu không đúng.';
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +50,7 @@
 
     <div class="container">
 
+
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -35,11 +60,13 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                                <img style="width:100%; height:100%; object-fit: cover;" src="https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/445700051_473262521750869_3888423941989595896_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeH8lmjOBn1m_P8VoC_qweW8ZpH7_oXdyK1mkfv-hd3IrdXEP64prLxbTaTeNN1gCeYvO9ZwpeHccaj9rEP6ORex&_nc_ohc=-SKvOunLA-oQ7kNvgGmnDLN&_nc_oc=Adh3zBwD2goIs-U_kxzVtnEdUN4oxatwsqXfSu38HqOPGODqtT2buEz4k2f_pB-7mwc&_nc_zt=23&_nc_ht=scontent.fdad1-2.fna&_nc_gid=A9FeDq6-HDo42CiXxY7Lr9Y&oh=00_AYD9oun7wFPi15tqEi7k0ji8ncku0I_hQcYHqlWraFxFDQ&oe=67B0D042" alt="">
+                            </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 style="font-weight: bold;" class="h4 text-gray-900 mb-4 ">Đăng nhập</h1>
                                     </div>
                                     <form class="user" method="POST">
                                         <div class="form-group">
@@ -51,6 +78,11 @@
                                             <input type="password" class="form-control form-control-user"
                                                 id="exampleInputPassword" name="login-password" placeholder="Password" required>
                                         </div>
+                                        <label style="color:red;" for=""><?php
+                                            if(isset($checkRole) && $checkRole!=""){
+                                                echo $checkRole;
+                                            }
+                                        ?></label>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
@@ -59,8 +91,8 @@
                                             </div>
                                         </div>
                                         <input type="Submit" value="Login" class="btn btn-primary btn-user btn-block">
-                                            
-                                        
+
+
                                         <hr>
                                         <a href="index.php" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google

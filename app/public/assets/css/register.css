@@ -1,0 +1,9 @@
+
+body{
+    position: relative;
+}
+.alert-success{
+    position: absolute;
+    width:300px;
+    top:0;
+}

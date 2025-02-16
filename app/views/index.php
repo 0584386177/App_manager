@@ -1,12 +1,12 @@
 
-<?php
-require_once '../config/config.php';
-
-
-?>
-<?php
-require_once 'include/head.php';
-?>
+    <?php
+    session_start();
+    ob_start();
+    require_once '../config/config.php';
+    
+    if ($_SESSION['user'] && $_SESSION['user'] == 1) {
+    require_once 'include/head.php';
+    ?>
 
 
 
@@ -602,6 +602,9 @@ require_once 'include/head.php';
         </div>
     </div>
 
-    <?php
+<?php
     require_once 'include/footer.php';
-    ?>
+} else {
+    header("Location:login.php");
+}
+?>

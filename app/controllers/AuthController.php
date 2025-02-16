@@ -1,4 +1,4 @@
-<?php
+<!-- 
 require_once '../controllers/AuthController.php';
 class AuthController extends Controller{
     protected $adminModel;
@@ -19,7 +19,9 @@ class AuthController extends Controller{
             // Chuyển hướng về trang quản lý
             header('Location: index.php');
             exit;
-        } 
+        } else{
+            echo "123123123123";
+        }
         }
     }
-}
+} -->
